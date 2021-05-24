@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue学习</title>
+    <!--CDN  对于制作原型或学习，你可以这样使用最新版本 -->
+    <!--记住这里script标签要分两个 -->
+    <!-- text/javascript 不要写成javascript ，不写没事，写错不行 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mycss.css"></link>
+</head>
+<body>
+<div id="app">
+    {{ mydata }}
+    <!-- 双大括号中也可以直接使用vue的函数 -->
+    {{ show()}}
+
+    <!-- vue指令 -->
+    <!-- v-html可以把普通文本换成html文本 -->
+    <p v-html="h1"></p>
+
+    <!--  v-bind可控制样式 -->
+    <p class="red">看我的颜色</p>
+    <p v-bind:class="{'red':blue}">看我的颜色</p>
+
+    <!-- v-model 表单绑定vue的值-->
+    改变颜色<input type="checkbox" v-model="blue"/>
+
+    <!-- v-if控制能否看见-->
+    <p v-if="seen"> 你能看见我吗</p>
+
+    <p v-if="seenflag==0">flag是0</p>
+    <p v-else-if="seenflag==1">flag是1</p>
+    <p v-else>其他</p>
+
+    <!--和v-if性质差不多 -->
+    <p v-show="seen">v-show的看见吗</p>
+
+    <!-- 用于遍历的v-for -->
+    <p v-for="code in codes">{{code}}</p>
+    <p v-for = "(s,index) in students">序号{{index+1}},名字{{s.name}},年龄{{s.age}}</p>
+
+</div>
+</body>
+<script type="text/javascript">
+    //这里可控制台通过vm.mydata改变mydata的值
+    //也可以用vm.$data.mydata（一般用在vue实例之外，获取数据用的）
+    const vm = new Vue({
+        el: "#app", // id选择器
+        data: {
+            mydata: "数据1",
+            name: "omen",
+            age: 20,
+            h1: "<h1>大写的字</h1>",
+            blue: true,
+            seen: true,
+            seenflag: 1,
+            codes:["python","java","php"],
+            students:[
+                {name:"cxb",age:24},
+                {name:"zhs",age:20},
+                {name:"lisi",age:20},
+            ]
+
+        },
+        methods: {
+            show: function () {
+                //vue实例中的方法调用定义在vue的属性要用this
+                return this.name;
+            }
+        },
+        //生命周期的函数，methods外面
+        mounted: function () {
+            this.name = "陈修榜";
+        }
+    });
+</script>
+</html>
